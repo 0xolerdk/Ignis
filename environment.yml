@@ -1,0 +1,19 @@
+name: wildfire-nowcasting
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.11
+  - pip
+  - numpy
+  - pytorch
+  - torchvision
+  - cudatoolkit=11.8
+  - rasterio
+  - shapely
+  - pyproj
+  - gdal
+  - xarray
+  - scikit-image
+  - pip:
+      - -r requirements.txt
