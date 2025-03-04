@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "event_id": "DEMO_001",
+      "title": "Demo Wildfire",
+      "center": [-121.45, 38.45],
+      "radius_deg": 0.35,
+      "last_update": "2024-08-01T12:00:00Z",
+      "sources": ["offline"]
+    }
+  ]
+}
