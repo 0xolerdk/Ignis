@@ -1,0 +1,84 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.nasa.gov
+      user-agent:
+      - python-httpx/0.28.1
+    method: GET
+    uri: https://api.nasa.gov/DONKI/notifications?startDate=2024-03-01&endDate=2024-03-03&type=all&api_key=DEMO_KEY
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA+xXXWvbSBT9Kxf3YRPwhywpTao3r22CSRyXymUhm30Yj8bSUGlGzIzsmqX/fe8d
+        O41sQpOFFnZLMRhnNHM/zrlzdPLn351KWMtysdzVopN0rtNlp/u4NpvgShiEcRAFUW902wuC+Onp
+        xw+3+LhwrrbJYPCJNUz2Oa94P7dr3lfMsn6uN4PJ4u5mNthIsR2MSmHcIHwXx+Fg2EpjbSOWsqL8
+        lK2HyYJoGQ6TOLh/2va7zna4480bGOuqapR0O/ylTSYVcyKDuc5EKVUOY6GcMDBhjq2YFbBYw512
+        ci05c1Ir24UbpbelyHLRhZlaa1P5B3AG4/F8DL5iOH9QmGq+RwcIngTSmnEBfwjmCkzQDgo9uBa6
+        YrkSTnJIHQalAEdBZtQo1YWhThtNorf3x5sn+00t7L8GnEjLS4aImQTuFqPRb/aktPdGZJL7pg5o
+        SAtYNHxE2BCr1GERFq71RhhVIV6g14iPZCVY3RhsElEB69vdHtrFFcGZdbYPywLDPXSmn2thsArl
+        8NwHYQUzvGgj+tABjoBLPIQJoDZIUIV0mR3cjdIRmMcztdFZw3EXUxnYQjdlBisBkojEU1QyPWks
+        /eDck56Xu/6Dog/ylDZVhWET+nOhck1zcFy+JUowoodhyowrELU9YdrWyKfoH1F4U+PmTHyGglks
+        lPECc5diI0q46L+9hLMK580gjOeQNYbyUWC7U7qmCSBkdNameXiVBME9OH3CPS72gepe0vl9lRY4
+        882udogngVAynCwCLi00/wRb6RDpSTtUcJXEl5iiN3uf4k0dwpkVAlRr8v3up3kKz2FbSGSsYjtC
+        +ynleD49yRD2wqvl8DKJqYkePv9WhjB8t1eL4blnyHPt2eCGrR0wB9fTRRfm9FXrkhnPrva3SpuV
+        xEGombV7UI1u8gKXH7nb4Jz6y48T1ebSc8AbY2icKR5rjDY4mUbkdO2xP+WHqsJKcKJ8aSO8JBsK
+        Njtct4P4eLKoVRREatVvxjnDOy9s4umiT+dL998qaPR9FHT4OgWNLv5bCjpqnO7lQvmbgzr0owQ1
+        ukii8CVBjX4J6k8tqD+z8jyrPaj833Rv4XfRnih+hfYMY7qA/x/39txb9rUGzveaxBcv6U34S29e
+        pTepzJW36/gi31vAr+4HvSG6nwwdIb3CyR6NxlMyFLdD+m65am+H2s7Kn/yRVgdSXYkjS4k+kOsK
+        DSx6GbTiemWF2Ry8bK1xcVUKyFv/N+ztn0Bf/aJDObV7zzqUzpe//gEAAP//AwBZ52qw4w0AAA==
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Age:
+      - '1'
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 22 Oct 2025 22:20:27 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Api-Umbrella-Request-Id:
+      - cq1o15nqvl0q7rc8idg0
+      X-Cache:
+      - MISS
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Ratelimit-Limit:
+      - '10'
+      X-Ratelimit-Remaining:
+      - '5'
+      X-Vcap-Request-Id:
+      - 12473356-4c6c-4907-6775-165e949d1246
+      X-Xss-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

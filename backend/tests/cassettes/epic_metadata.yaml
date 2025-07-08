@@ -1,0 +1,103 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.nasa.gov
+      user-agent:
+      - python-httpx/0.28.1
+    method: GET
+    uri: https://api.nasa.gov/EPIC/api/natural/date/2024-03-01?api_key=DEMO_KEY
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Age:
+      - '0'
+      Cache-Control:
+      - no-cache, private
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 22 Oct 2025 22:20:29 GMT
+      Set-Cookie:
+      - XSRF-TOKEN=eyJpdiI6ImVIQU1lZ1MwYXpXWXNxN1phWnlheVE9PSIsInZhbHVlIjoiUGpHdTh2S0NSbHMvZnZmOEF6V0xvTEJ2LzVLK2ZGNFg3ckdjOFI5dmNhMkx2M0tlaEY2b3luMG9Zc0s5cjB6R1VtNW0yai9tYVkzT2xCMzFJa3QwdzVTYmw3QU9QSC9NVWQ1cFJYeEJVWEpyT1JZREltbU1ITURVL25mbUorL0YiLCJtYWMiOiI2M2Y0NmYzNjhhYTYxYTEzNjY4NWQ5NTdmZmRlZGY1ODc4ZmUxNGE3Yjg0ZWZkMTIyNDg0YjFhMzQ4MzMxMzI1IiwidGFnIjoiIn0%3D;
+        expires=Thu, 23 Oct 2025 00:20:29 GMT; Max-Age=7200; path=/; secure; samesite=lax
+      - laravel_session=eyJpdiI6Inc4TnZDTDBFL0NWN2ZDSzNxalNhSUE9PSIsInZhbHVlIjoiOEhMVm1PY20zWDhRSlduUzFIRmFXNWJMeUZXWVYxYVRRM3VxMFp0alN3TDdXclRCZmRiSTIxaXdtaW5jRW9GTERWTWxwdEdQdHNNalJoQXJYZWN4R2Y5a3d1WElkNTB0V2tPYnRGK3o4V3dZOFhoU1BzZHIvb2ZqZnBUdGlmTWEiLCJtYWMiOiJjZWIzZTM4ODBmMTEzMDEyNmY0OTQ3OGEzN2ZkYWE4NWNhMmNjYjU5ZmQ4NTIwMmJmMjU0MmM0M2MxZjQzNDc5IiwidGFnIjoiIn0%3D;
+        expires=Thu, 23 Oct 2025 00:20:29 GMT; Max-Age=7200; path=/; secure; httponly;
+        samesite=lax
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Api-Umbrella-Request-Id:
+      - cq1o16agfa4emvijbq1g
+      X-Cache:
+      - MISS
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Ratelimit-Limit:
+      - '10'
+      X-Ratelimit-Remaining:
+      - '7'
+      X-Vcap-Request-Id:
+      - d2346544-f66f-4499-7816-c92550b61a7e
+    status:
+      code: 200
+      message: OK
+version: 1
