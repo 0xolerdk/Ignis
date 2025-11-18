@@ -227,9 +227,21 @@ def run(args: argparse.Namespace) -> Mapping[str, float]:
                     np.savez(
                         sample_path,
                         label=label_patch.astype(np.uint8),
-                        rgb=patch_layers.get("rgb") if patch_layers.get("rgb") is not None else np.array([]),
-                        thermal=patch_layers.get("thermal") if patch_layers.get("thermal") is not None else np.array([]),
-                        vegetation=patch_layers.get("vegetation") if patch_layers.get("vegetation") is not None else np.array([]),
+                        rgb=(
+                            patch_layers.get("rgb")
+                            if patch_layers.get("rgb") is not None
+                            else np.array([])
+                        ),
+                        thermal=(
+                            patch_layers.get("thermal")
+                            if patch_layers.get("thermal") is not None
+                            else np.array([])
+                        ),
+                        vegetation=(
+                            patch_layers.get("vegetation")
+                            if patch_layers.get("vegetation") is not None
+                            else np.array([])
+                        ),
                         metadata=json.dumps(asdict(meta)),
                     )
                     sample_count += 1

@@ -101,12 +101,16 @@ def test_run_pipeline_and_explainability(tmp_path: Path) -> None:
 
     segmentation = cast(dict, result["segmentation"])
     assert cast(np.ndarray, segmentation["binary_mask"]).mean() == 1.0
-    assert cast(dict, segmentation["polygons"])["features"], "Expected non-empty polygons"
+    assert cast(dict, segmentation["polygons"])[
+        "features"
+    ], "Expected non-empty polygons"
 
     nowcast = cast(dict, result["nowcast"])
-    assert set(nowcast.keys()) == {6, 12, 24}
+    assert set(int(k) for k in nowcast.keys()) == {6, 12, 24}
     for horizon, array in nowcast.items():
-        expected = torch.sigmoid(torch.tensor(-1.0 + [6, 12, 24].index(horizon))).item()
+        expected = torch.sigmoid(
+            torch.tensor(-1.0 + [6, 12, 24].index(int(horizon)))
+        ).item()
         assert np.allclose(array, expected, atol=1e-3)
 
     explain_output = run_explainability(

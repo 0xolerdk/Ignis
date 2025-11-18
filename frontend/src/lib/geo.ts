@@ -1,4 +1,4 @@
-import type { Feature, FeatureCollection, Geometry } from "geojson";
+import type { FeatureCollection, Geometry } from "geojson";
 import type { LatLngBoundsExpression } from "leaflet";
 
 export function computeBounds(collection?: FeatureCollection): LatLngBoundsExpression | undefined {
@@ -29,7 +29,7 @@ function collectCoords(geometry: Geometry | null, target: Array<[number, number]
       for (const coord of ring as Array<[number, number]>) target.push(coord);
     }
   } else if (geometry.type === "MultiLineString" || geometry.type === "MultiPolygon") {
-    for (const part of geometry.coordinates as any[]) {
+    for (const part of geometry.coordinates as Array<Array<[number, number]>>) {
       collectCoords({ type: geometry.type.includes("Polygon") ? "Polygon" : "LineString", coordinates: part } as Geometry, target);
     }
   } else if (geometry.type === "GeometryCollection") {
