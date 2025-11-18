@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Sequence, Tuple
+from typing import List, Sequence, Tuple, Union
 
 import torch
 from torch import nn
@@ -143,6 +143,7 @@ class WildfireConvLSTM(nn.Module):
         )
         final_dim = hidden_dims[-1]
         self.dropout = nn.Dropout2d(dropout)
+        self.head: Union[nn.Sequential, nn.Conv2d]
         if bilinear_head:
             self.head = nn.Sequential(
                 nn.Conv2d(final_dim, final_dim, kernel_size=3, padding=1, bias=False),

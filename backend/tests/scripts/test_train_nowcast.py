@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 from pathlib import Path
-from types import SimpleNamespace
+import argparse
+from pathlib import Path
 
 import numpy as np
 
@@ -55,7 +56,7 @@ def test_train_nowcast_produces_metrics(tmp_path: Path) -> None:
     _generate_nowcast_samples(data_dir)
 
     output_dir = tmp_path / "nowcast_training"
-    args = SimpleNamespace(
+    args = argparse.Namespace(
         data_dir=data_dir,
         output_dir=output_dir,
         epochs=1,

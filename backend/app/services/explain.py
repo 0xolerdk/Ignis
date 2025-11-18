@@ -71,11 +71,10 @@ def run_explainability(
     model: WildfireUNet,
     chip: Mapping[str, np.ndarray],
     *,
-    device: str = "cpu",
+    device: torch.device,
     target_layer: str = "inc",
     output_path: Optional[Path] = None,
 ) -> Dict[str, object]:
-    device = torch.device(device)
     model.eval()
     channel_arrays = []
     for key in ("rgb", "thermal", "vegetation"):

@@ -190,7 +190,7 @@ def evaluate(
     }
 
 
-def run(args: argparse.Namespace) -> Mapping[str, float]:
+def run(args: argparse.Namespace) -> Mapping[str, object]:
     configure_logging(args.log_level)
     set_seed(args.seed)
 
@@ -245,7 +245,7 @@ def run(args: argparse.Namespace) -> Mapping[str, float]:
     history: List[Dict[str, float]] = []
     best_dice = 0.0
     best_checkpoint: Optional[Path] = None
-    best_metrics: Dict[str, float] = {}
+    best_metrics: Mapping[str, float] = {}
 
     for epoch in range(1, config.epochs + 1):
         train_metrics = train_epoch(

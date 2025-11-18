@@ -6,7 +6,7 @@ import hashlib
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Iterable, Mapping, Optional, Sequence, Tuple
+from typing import Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
 import httpx
 import numpy as np
@@ -198,7 +198,7 @@ def _flatten_coordinates(coordinates: Sequence) -> Iterable[Tuple[float, float]]
         lon, lat = float(coordinates[0]), float(coordinates[1])
         return [(lon, lat)]
 
-    pairs = []
+    pairs: List[Tuple[float, float]] = []
     for sub in coordinates:
         pairs.extend(_flatten_coordinates(sub))
     return pairs

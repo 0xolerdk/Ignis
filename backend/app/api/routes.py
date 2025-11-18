@@ -4,9 +4,10 @@ from __future__ import annotations
 
 from datetime import datetime
 from io import BytesIO
-from typing import Dict, List
+from typing import Dict, List, cast
 
 import numpy as np
+import torch
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 from shapely.affinity import scale as scale_polygon
@@ -76,7 +77,7 @@ _EVENT_INDEX = {event["event_id"]: event for event in _EVENTS}
 _EXPLAIN_MODEL = WildfireUNet(in_channels=7, base_filters=4, dropout=0.0)
 for param in _EXPLAIN_MODEL.parameters():
     param.data.zero_()
-if hasattr(_EXPLAIN_MODEL.outc, "conv"):
+if hasattr(_EXPLAIN_MODEL.outc, "conv") and _EXPLAIN_MODEL.outc.conv.bias is not None:
     _EXPLAIN_MODEL.outc.conv.bias.data.fill_(4.0)
 _EXPLAIN_MODEL.eval()
 
@@ -93,10 +94,10 @@ async def list_events(status: str = "open", limit: int = 50) -> EventListRespons
     del status
     summaries = [
         EventSummary(
-            event_id=event["event_id"],
-            title=event["title"],
-            last_update=event["last_update"],
-            area_sq_km=event["area_sq_km"],
+            event_id=cast(str, event["event_id"]),
+            title=cast(str, event["title"]),
+            last_update=cast(datetime, event["last_update"]),
+            area_sq_km=cast(float, event["area_sq_km"]),
         )
         for event in _EVENTS[:limit]
     ]
@@ -111,10 +112,10 @@ async def get_event(event_id: str) -> EventResponse:
         raise HTTPException(status_code=404, detail="Event not found")
     return EventResponse(
         event_id=event_id,
-        title=event["title"],
-        last_update=event["last_update"],
-        geometry=event["geometry"],
-        sources=event["sources"],
+        title=cast(str, event["title"]),
+        last_update=cast(datetime, event["last_update"]),
+        geometry=cast(Dict, event["geometry"]),
+        sources=cast(List[str], event["sources"]),
         cached_tiles=["thermal", "rgb"],
     )
 
@@ -135,7 +136,7 @@ async def predict(request: PredictionRequest) -> PredictionResponse:
     if event is None:
         raise HTTPException(status_code=404, detail="Event not found")
 
-    base_polygon = event["polygon"].buffer(0.0)
+    base_polygon = cast(Point, event["polygon"]).buffer(0.0)
     segmentation_fc = _feature_collection(base_polygon)
     segmentation_result = SegmentationResult(
         mean_probability=0.82,
@@ -210,8 +211,10 @@ async def explain(event_id: str, time_iso: datetime) -> StreamingResponse:
     del time_iso
 
     chip = _build_chip()
-    result = run_explainability(_EXPLAIN_MODEL, chip, device="cpu", target_layer="inc")
-    overlay = result["overlay"]
+    result = run_explainability(
+        _EXPLAIN_MODEL, chip, device=torch.device("cpu"), target_layer="inc"
+    )
+    overlay = cast(np.ndarray, result["overlay"])
 
     from PIL import Image
 
