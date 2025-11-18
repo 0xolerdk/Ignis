@@ -48,7 +48,7 @@ train-seg:
 	$(PYTHON) $(BACKEND_DIR)/scripts/train_segmentation.py
 
 train-nowcast:
- 	$(PYTHON) $(BACKEND_DIR)/scripts/train_nowcast.py --data-dir $(NOWCAST_DATA_DIR) --output-dir $(NOWCAST_OUTPUT)
+	$(PYTHON) $(BACKEND_DIR)/scripts/train_nowcast.py --data-dir $(NOWCAST_DATA_DIR) --output-dir $(NOWCAST_OUTPUT)
 
 # ==== Run Backend ====
 serve:
