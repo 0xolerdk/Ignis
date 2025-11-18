@@ -8,7 +8,7 @@ import logging
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Mapping, Optional, Sequence
+from typing import Dict, List, Mapping, Optional, Sequence, cast
 
 import matplotlib
 
@@ -323,8 +323,8 @@ def run(args: argparse.Namespace) -> Mapping[str, object]:
             }
         )
 
-        if val_metrics["brier_mean"] <= best_score:
-            best_score = float(val_metrics["brier_mean"])
+        if cast(float, val_metrics["brier_mean"]) <= best_score:
+            best_score = cast(float, val_metrics["brier_mean"])
             best_checkpoint = checkpoints_dir / "best_model.pt"
             torch.save(
                 {
@@ -343,8 +343,8 @@ def run(args: argparse.Namespace) -> Mapping[str, object]:
 
         # Reliability plots for each horizon
         for horizon in horizons:
-            probs = val_metrics["probs"][horizon]
-            targets = val_metrics["targets"][horizon]
+            probs = cast(np.ndarray, val_metrics["probs"])[horizon]
+            targets = cast(np.ndarray, val_metrics["targets"])[horizon]
             plot_reliability(probs, targets, horizon, config.output_dir)
 
     metrics_summary = {

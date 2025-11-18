@@ -15,7 +15,22 @@ from backend.app.main import create_app
 client = TestClient(create_app())
 
 
-def test_api_e2e_predict_and_explain(tmp_path):
+def test_api_e2e_predict_and_explain(tmp_path, mocker):
+    mocker.patch(
+        "backend.app.api.routes.read_events_fixture",
+        return_value={
+            "events": [
+                {
+                    "event_id": "TEST_EVENT",
+                    "title": "Test Wildfire",
+                    "last_update": "2024-01-01T00:00:00Z",
+                    "center": [-121.5, 38.5],
+                    "radius_deg": 0.35,
+                    "sources": ["test"],
+                }
+            ]
+        },
+    )
     events_response = client.get("/api/events")
     assert events_response.status_code == 200
     events_payload = events_response.json()

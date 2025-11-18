@@ -9,10 +9,12 @@ from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import (
+    Callable,
     Dict,
     Iterable,
     List,
     Mapping,
+    cast,
     Optional,
     Sequence,
     Tuple,
@@ -135,8 +137,8 @@ def run(args: argparse.Namespace) -> Mapping[str, float]:
         ) -> Mapping[int, ChipSet]:
             return _generate_fixture_chips(event, times, zooms, rng)
 
-        fetch_fn = fetch_fixtures
-        build_fn = build_fixtures
+        fetch_fn = cast(Callable, fetch_fixtures)
+        build_fn = cast(Callable, build_fixtures)
     else:
         fetch_fn = eonet.fetch_open_wildfire_events
         build_fn = gibs.build_chips
@@ -174,7 +176,7 @@ def run(args: argparse.Namespace) -> Mapping[str, float]:
                 geometries = geo.geometries_from_event(event)
                 polygon_mask = geo.rasterize_geometries(
                     geometries,
-                    out_shape=hotspot_mask.shape[:2],
+                    out_shape=(hotspot_mask.shape[0], hotspot_mask.shape[1]),
                     transform=chip_set.transform,
                 )
                 label_mask = geo.fuse_hotspots_and_polygons(hotspot_mask, polygon_mask)
@@ -225,9 +227,21 @@ def run(args: argparse.Namespace) -> Mapping[str, float]:
                     np.savez(
                         sample_path,
                         label=label_patch.astype(np.uint8),
-                        rgb=patch_layers.get("rgb"),
-                        thermal=patch_layers.get("thermal"),
-                        vegetation=patch_layers.get("vegetation"),
+                        rgb=(
+                            patch_layers.get("rgb")
+                            if patch_layers.get("rgb") is not None
+                            else np.array([])
+                        ),
+                        thermal=(
+                            patch_layers.get("thermal")
+                            if patch_layers.get("thermal") is not None
+                            else np.array([])
+                        ),
+                        vegetation=(
+                            patch_layers.get("vegetation")
+                            if patch_layers.get("vegetation") is not None
+                            else np.array([])
+                        ),
                         metadata=json.dumps(asdict(meta)),
                     )
                     sample_count += 1

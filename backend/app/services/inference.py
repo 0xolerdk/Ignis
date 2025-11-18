@@ -187,7 +187,7 @@ def run_nowcasting(
         with torch.no_grad():
             logits = model(seq_tensor)
             probs = torch.sigmoid(logits).cpu().numpy()[0]
-        return {h: probs[idx] for idx, h in enumerate(nowcast.horizons)}
+        return {str(h): probs[idx] for idx, h in enumerate(nowcast.horizons)}
 
     predictions = []
     model.train()
@@ -198,7 +198,7 @@ def run_nowcasting(
             predictions.append(probs)
     model.eval()
     mean_probs = np.mean(np.stack(predictions, axis=0), axis=0)
-    return {h: mean_probs[idx] for idx, h in enumerate(nowcast.horizons)}
+    return {str(h): mean_probs[idx] for idx, h in enumerate(nowcast.horizons)}
 
 
 def run_pipeline(

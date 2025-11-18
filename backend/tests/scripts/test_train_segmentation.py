@@ -2,15 +2,15 @@
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
-from types import SimpleNamespace
 
 from backend.scripts import build_dataset, evaluate, train_segmentation
 
 
 def _build_fixture_dataset(tmp_path: Path) -> Path:
     dataset_dir = tmp_path / "dataset"
-    args = SimpleNamespace(
+    args = argparse.Namespace(
         output_dir=dataset_dir,
         limit=1,
         zoom_levels="8,9",
@@ -31,7 +31,7 @@ def test_training_and_evaluation_workflow(tmp_path: Path) -> None:
     samples_dir = _build_fixture_dataset(tmp_path)
 
     train_output = tmp_path / "training"
-    train_args = SimpleNamespace(
+    train_args = argparse.Namespace(
         data_dir=samples_dir,
         output_dir=train_output,
         epochs=1,
@@ -55,9 +55,9 @@ def test_training_and_evaluation_workflow(tmp_path: Path) -> None:
     assert metrics["best_checkpoint"]
 
     eval_output = tmp_path / "evaluation"
-    eval_args = SimpleNamespace(
+    eval_args = argparse.Namespace(
         data_dir=samples_dir,
-        checkpoint=Path(metrics["best_checkpoint"]),
+        checkpoint=Path(str(metrics["best_checkpoint"])),
         output_dir=eval_output,
         threshold=0.5,
         mc_samples=2,

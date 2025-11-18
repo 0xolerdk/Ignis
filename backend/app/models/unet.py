@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Union
+
 import torch
 from torch import nn
 
@@ -48,7 +50,7 @@ class Up(nn.Module):
         self, in_channels: int, out_channels: int, dropout: float, bilinear: bool
     ) -> None:
         super().__init__()
-
+        self.up: Union[nn.Upsample, nn.ConvTranspose2d]
         if bilinear:
             self.up = nn.Upsample(scale_factor=2, mode="bilinear", align_corners=True)
             self.conv = DoubleConv(

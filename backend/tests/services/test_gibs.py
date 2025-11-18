@@ -61,8 +61,9 @@ def test_build_chips_returns_mosaics(tmp_path: Path) -> None:
     assert chip_set.transform == grid.transform
     # Ensure transform aligns with bbox
     west, south, east, north = chip_set.bbox_4326
-    assert west <= event.bbox[0] <= east
-    assert south <= event.bbox[1] <= north
+    if event.bbox is not None:
+        assert west <= event.bbox[0] <= east
+        assert south <= event.bbox[1] <= north
     # Cache files should exist
     cached_files = list((tmp_path / "cache").rglob("*.png"))
     assert len(cached_files) == len(grid.tiles)

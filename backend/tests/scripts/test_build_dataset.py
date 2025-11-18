@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+import argparse
 from datetime import datetime, timezone
 from pathlib import Path
-from types import SimpleNamespace
+from typing import cast, Tuple
 
 import numpy as np
 
@@ -18,7 +19,9 @@ def _synthetic_chip_set(event: WildfireEvent, times, zooms) -> dict[int, ChipSet
     rng = np.random.default_rng(123)
     chip_sets = {}
     for zoom in zooms:
-        tile_grid = compute_tile_grid(event.bbox, zoom)
+        tile_grid = compute_tile_grid(
+            cast(Tuple[float, float, float, float], event.bbox), zoom
+        )
         height = tile_grid.height_tiles * 256
         width = tile_grid.width_tiles * 256
         arrays = {}
@@ -85,7 +88,7 @@ def test_run_build_dataset_with_fixtures(monkeypatch, tmp_path: Path) -> None:
         lambda event, times, zooms, **_: _synthetic_chip_set(event, times, zooms),
     )
 
-    args = SimpleNamespace(
+    args = argparse.Namespace(
         output_dir=tmp_path,
         limit=1,
         zoom_levels=",".join(str(z) for z in zooms),

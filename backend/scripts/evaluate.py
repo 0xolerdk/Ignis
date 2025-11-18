@@ -6,7 +6,7 @@ import argparse
 import json
 import logging
 from pathlib import Path
-from typing import List, Mapping, Optional
+from typing import List, Mapping, Optional, cast
 
 import matplotlib
 
@@ -191,7 +191,9 @@ def run(args: argparse.Namespace) -> Mapping[str, float]:
     metrics_path.write_text(json.dumps(results, indent=2))
 
     plot_reliability(
-        metrics["probs"], metrics["targets"], args.output_dir / "reliability_curve.png"
+        cast(np.ndarray, metrics["probs"]),
+        cast(np.ndarray, metrics["targets"]),
+        args.output_dir / "reliability_curve.png",
     )
 
     return results

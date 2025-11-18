@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import cast
 
 import numpy as np
 import torch
@@ -24,7 +25,8 @@ def _create_segmentation_checkpoint(path: Path) -> Path:
     model = WildfireUNet(in_channels=7, base_filters=4, dropout=0.0)
     for param in model.parameters():
         param.data.zero_()
-    model.outc.conv.bias.data.fill_(4.0)
+    if model.outc.conv.bias is not None:
+        model.outc.conv.bias.data.fill_(4.0)
     checkpoint = {
         "model_state": model.state_dict(),
         "config": {"in_channels": 7, "base_filters": 4, "dropout": 0.0},
@@ -97,22 +99,26 @@ def test_run_pipeline_and_explainability(tmp_path: Path) -> None:
         seed=123,
     )
 
-    segmentation = result["segmentation"]
-    assert segmentation["binary_mask"].mean() == 1.0
-    assert segmentation["polygons"]["features"], "Expected non-empty polygons"
+    segmentation = cast(dict, result["segmentation"])
+    assert cast(np.ndarray, segmentation["binary_mask"]).mean() == 1.0
+    assert cast(dict, segmentation["polygons"])[
+        "features"
+    ], "Expected non-empty polygons"
 
-    nowcast = result["nowcast"]
-    assert set(nowcast.keys()) == {6, 12, 24}
+    nowcast = cast(dict, result["nowcast"])
+    assert set(int(k) for k in nowcast.keys()) == {6, 12, 24}
     for horizon, array in nowcast.items():
-        expected = torch.sigmoid(torch.tensor(-1.0 + [6, 12, 24].index(horizon))).item()
+        expected = torch.sigmoid(
+            torch.tensor(-1.0 + [6, 12, 24].index(int(horizon)))
+        ).item()
         assert np.allclose(array, expected, atol=1e-3)
 
     explain_output = run_explainability(
         segmentation_model.model,
         chip,
-        device="cpu",
+        device=torch.device("cpu"),
         target_layer="inc",
         output_path=tmp_path / "explain.png",
     )
     assert explain_output["output_path"]
-    assert Path(explain_output["output_path"]).exists()
+    assert Path(cast(str, explain_output["output_path"])).exists()
